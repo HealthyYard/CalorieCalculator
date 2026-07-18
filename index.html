@@ -111,22 +111,22 @@
     .logo-card {
       position: relative;
       z-index: 1;
-      width: 116px;
-      height: 116px;
+      width: 145px;
+      height: 145px;
       display: grid;
       place-items: center;
+      padding: 8px;
+      border: 1px solid rgba(255,255,255,.12);
       border-radius: 28px;
-      color: var(--purple);
-      background: #fff;
-      box-shadow: 0 14px 35px rgba(0,0,0,.16);
+      background: rgba(255,255,255,.055);
+      box-shadow: 0 14px 35px rgba(0,0,0,.12);
     }
 
-    .logo-card strong {
-      font-family: Arial, sans-serif;
-      font-size: 65px;
-      font-weight: 300;
-      letter-spacing: -10px;
-      transform: translateX(-4px);
+    .logo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 14px rgba(0,0,0,.14));
     }
 
     .layout {
@@ -374,6 +374,9 @@
     }
 
     .secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       min-height: 45px;
       border: 1px solid var(--line);
       border-radius: 13px;
@@ -381,6 +384,7 @@
       background: #fff;
       cursor: pointer;
       font-weight: 700;
+      text-decoration: none;
     }
 
     .secondary:hover { border-color: var(--purple); }
@@ -420,7 +424,7 @@
     @media (max-width: 650px) {
       .page { width: min(100% - 14px, 1120px); padding-top: 8px; }
       .hero { grid-template-columns: 1fr; padding: 25px 21px; border-radius: 22px; }
-      .logo-card { display: none; }
+      .logo-card { width: 118px; height: 118px; justify-self: start; }
       .builder, .summary { padding: 17px; }
       .panel { border-radius: 20px; }
       .form-grid { grid-template-columns: 1fr; }
@@ -454,7 +458,9 @@
         <h1>حاسبة السعرات والماكروز</h1>
         <p class="subtitle">اختر الصنف، أدخل الكمية بالجرام، وأضف جميع مكونات وجبتك لمعرفة مجموع السعرات والبروتين والكارب والدهون.</p>
       </div>
-      <div class="logo-card" aria-label="Healthy Yard"><strong>hy</strong></div>
+      <div class="logo-card">
+        <img src="logo(13).png" alt="شعار هلثي يارد" />
+      </div>
     </header>
 
     <section class="layout">
@@ -516,7 +522,7 @@
         </div>
         <div class="action-row">
           <button class="secondary" id="copySummary" type="button">نسخ النتيجة</button>
-          <button class="secondary" id="printSummary" type="button">طباعة</button>
+          <a class="secondary" href="https://linktr.ee/Healthy.yard" target="_blank" rel="noopener noreferrer">مواقع التواصل</a>
         </div>
         <p class="note">القيم الغذائية في قاعدة البيانات محسوبة لكل 100 جرام، ثم تُضرب تلقائيًا حسب الكمية المدخلة. النتائج تقديرية وقد تختلف قليلًا باختلاف التحضير الفعلي.</p>
       </aside>
@@ -534,6 +540,9 @@
       { category: "chicken", name: "دجاج بكريمة السبانخ", cal: 159, protein: 26, carbs: 1.5, fat: 5.3 },
       { category: "chicken", name: "دجاج بصلصة الليمون", cal: 175, protein: 27, carbs: 1.6, fat: 6.2 },
       { category: "chicken", name: "دجاج بالزبدة", cal: 184, protein: 27, carbs: 1, fat: 8 },
+      { category: "chicken", name: "تكة ليمون", cal: 164, protein: 30, carbs: 0, fat: 4.6 },
+      { category: "chicken", name: "شيش دجاج", cal: 164, protein: 30, carbs: 0, fat: 4.6 },
+      { category: "chicken", name: "ستيك دجاج ايطالي", cal: 164, protein: 30, carbs: 0, fat: 4.6 },
       { category: "chicken", name: "دجاج صيني", cal: 141, protein: 24, carbs: 1, fat: 4.5 },
       { category: "chicken", name: "دجاج باربيكيو", cal: 158, protein: 25, carbs: 2, fat: 5.5 },
       { category: "chicken", name: "دجاج بيستو", cal: 167, protein: 26, carbs: 1.8, fat: 6.2 },
@@ -548,8 +557,10 @@
       { category: "chicken", name: "مسخن دجاج", cal: 160, protein: 26, carbs: 1, fat: 5.8 },
       { category: "chicken", name: "فاهيتا الدجاج", cal: 138, protein: 26, carbs: 0.5, fat: 4 },
       { category: "chicken", name: "صامولي فاهيتا دجاج", cal: 364, protein: 33.3, carbs: 32.5, fat: 11.2 },
-      { category: "chicken", name: "تورتيللا فاهيتا دجاج", cal: 391, protein: 34.7, carbs: 36.5, fat: 11.8 },
-      { category: "chicken", name: "فتة الدجاج", cal: 394, protein: 36.5, carbs: 26, fat: 16 },
+      { category: "chicken", name: "تورتيلا فاهيتا دجاج", cal: 391, protein: 34.7, carbs: 36.5, fat: 11.8 },
+      { category: "chicken", name: "(100 قرام فقط)فتة الدجاج", cal: 394, protein: 36.5, carbs: 26, fat: 16 },
+      { category: "chicken", name: "برجر دجاج بخبز البطاطا", cal: 401, protein: 32, carbs: 39.5, fat: 12.8 },
+
 
       // أطباق اللحم
       { category: "meat", name: "كباب لحم", cal: 147, protein: 22, carbs: 3.8, fat: 5 },
@@ -564,7 +575,7 @@
       { category: "meat", name: "لحم بكريمة الفطر", cal: 142, protein: 20, carbs: 2, fat: 6 },
       { category: "meat", name: "ستيك لحم تندرلوين", cal: 141, protein: 24, carbs: 0, fat: 5 },
       { category: "meat", name: "برجر لحم بخبز البطاطا", cal: 354, protein: 30, carbs: 31.5, fat: 12 },
-      { category: "meat", name: "تورتيللا فاهيتا لحم", cal: 366, protein: 27.7, carbs: 36.5, fat: 12.2 },
+      { category: "meat", name: "تورتيلا فاهيتا لحم", cal: 366, protein: 27.7, carbs: 36.5, fat: 12.2 },
       { category: "meat", name: "صامولي فاهيتا لحم", cal: 340, protein: 25.3, carbs: 32.5, fat: 12 },
 
       // البحريات
@@ -594,6 +605,7 @@
       { category: "carb", name: "بطاطا إيطالية", cal: 117, protein: 3, carbs: 17.2, fat: 4 },
       { category: "carb", name: "بطاطس ودجز", cal: 154, protein: 2.9, carbs: 17.2, fat: 8 }
     ];
+
 
     const categories = [
       { id: "chicken", label: "أطباق الدجاج" },
@@ -774,7 +786,6 @@
     document.getElementById("addItem").addEventListener("click", addItem);
     document.getElementById("clearAll").addEventListener("click", clearAll);
     document.getElementById("copySummary").addEventListener("click", copySummary);
-    document.getElementById("printSummary").addEventListener("click", () => window.print());
 
     document.querySelectorAll(".chip").forEach(chip => {
       chip.addEventListener("click", () => {
