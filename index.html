@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#351C37" />
+  <title>حاسبة سعرات هلثي يارد</title>
+  <style>
+    :root {
+      --purple: #351C37;
+      --purple-2: #4b294e;
+      --cream: #f6f1eb;
+      --card: #ffffff;
+      --gold: #d4af6a;
+      --green: #00a66a;
+      --ink: #211a22;
+      --muted: #716a72;
+      --line: #e9e0e9;
+      --danger: #a83c47;
+      --shadow: 0 18px 45px rgba(53, 28, 55, 0.11);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 12% 4%, rgba(212,175,106,.20), transparent 25%),
+        radial-gradient(circle at 88% 88%, rgba(0,166,106,.10), transparent 28%),
+        var(--cream);
+      color: var(--ink);
+      font-family: Tahoma, Arial, sans-serif;
+    }
+
+    button, input, select { font: inherit; }
+
+    .page {
+      width: min(1120px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 28px 0 44px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 22px;
+      align-items: center;
+      min-height: 190px;
+      padding: 34px;
+      border-radius: 28px;
+      color: white;
+      background: linear-gradient(135deg, var(--purple), var(--purple-2));
+      box-shadow: var(--shadow);
+    }
+
+    .hero::before {
+      content: "hy";
+      position: absolute;
+      left: 5%;
+      bottom: -56px;
+      font-family: Arial, sans-serif;
+      font-size: 210px;
+      font-weight: 300;
+      letter-spacing: -22px;
+      color: rgba(255,255,255,.055);
+      transform: rotate(-4deg);
+      pointer-events: none;
+    }
+
+    .brand {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: #f1dba9;
+      font-size: .92rem;
+      font-weight: 700;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--gold);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.7rem);
+      line-height: 1.15;
+      letter-spacing: -.04em;
+    }
+
+    .subtitle {
+      max-width: 650px;
+      margin: 14px 0 0;
+      color: rgba(255,255,255,.78);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .logo-card {
+      position: relative;
+      z-index: 1;
+      width: 116px;
+      height: 116px;
+      display: grid;
+      place-items: center;
+      border-radius: 28px;
+      color: var(--purple);
+      background: #fff;
+      box-shadow: 0 14px 35px rgba(0,0,0,.16);
+    }
+
+    .logo-card strong {
+      font-family: Arial, sans-serif;
+      font-size: 65px;
+      font-weight: 300;
+      letter-spacing: -10px;
+      transform: translateX(-4px);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
+      gap: 20px;
+      margin-top: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid rgba(53,28,55,.07);
+      border-radius: 24px;
+      background: rgba(255,255,255,.92);
+      box-shadow: var(--shadow);
+    }
+
+    .builder { padding: 24px; }
+
+    .section-title {
+      margin: 0 0 18px;
+      font-size: 1.25rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr .8fr;
+      gap: 12px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-size: .87rem;
+      font-weight: 700;
+    }
+
+    select, input {
+      width: 100%;
+      height: 51px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 0 14px;
+      color: var(--ink);
+      background: #fff;
+      outline: none;
+      transition: .2s ease;
+    }
+
+    select:focus, input:focus {
+      border-color: rgba(53,28,55,.55);
+      box-shadow: 0 0 0 4px rgba(53,28,55,.08);
+    }
+
+    .quick-grams {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 15px 0;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 13px;
+      color: var(--purple);
+      background: #fff;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    .chip:hover, .chip.active {
+      color: #fff;
+      border-color: var(--purple);
+      background: var(--purple);
+    }
+
+    .preview {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 18px 0;
+      padding: 14px;
+      border-radius: 18px;
+      background: #f8f5f8;
+      border: 1px solid #eee7ee;
+    }
+
+    .metric {
+      min-width: 0;
+      text-align: center;
+      padding: 12px 8px;
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: .75rem;
+      margin-bottom: 6px;
+    }
+
+    .metric strong {
+      font-size: 1.12rem;
+      color: var(--purple);
+      white-space: nowrap;
+    }
+
+    .primary {
+      width: 100%;
+      min-height: 52px;
+      border: 0;
+      border-radius: 15px;
+      color: #fff;
+      background: var(--purple);
+      cursor: pointer;
+      font-weight: 800;
+      box-shadow: 0 9px 22px rgba(53,28,55,.22);
+      transition: .18s ease;
+    }
+
+    .primary:hover { transform: translateY(-1px); background: #452348; }
+    .primary:active { transform: translateY(0); }
+
+    .items-wrap { margin-top: 22px; }
+
+    .items-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .items-head h2 { margin: 0; font-size: 1.12rem; }
+
+    .text-button {
+      border: 0;
+      color: var(--danger);
+      background: transparent;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .empty {
+      padding: 28px 16px;
+      border: 1px dashed #d8ccd8;
+      border-radius: 16px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.8;
+    }
+
+    .order-list { display: grid; gap: 10px; }
+
+    .order-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .order-item h3 {
+      margin: 0 0 5px;
+      font-size: 1rem;
+    }
+
+    .order-meta {
+      color: var(--muted);
+      font-size: .82rem;
+      line-height: 1.7;
+    }
+
+    .remove {
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 11px;
+      color: var(--danger);
+      background: #fff1f2;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .summary {
+      position: sticky;
+      top: 16px;
+      padding: 24px;
+      overflow: hidden;
+    }
+
+    .summary::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      left: -85px;
+      bottom: -95px;
+      border-radius: 50%;
+      background: rgba(0,166,106,.08);
+      pointer-events: none;
+    }
+
+    .total-cal {
+      padding: 22px;
+      border-radius: 20px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--purple), #5d3860);
+      text-align: center;
+    }
+
+    .total-cal span { display: block; color: rgba(255,255,255,.72); font-size: .86rem; }
+    .total-cal strong { display: block; margin-top: 6px; font-size: 2.6rem; line-height: 1; }
+    .total-cal small { color: rgba(255,255,255,.72); }
+
+    .totals-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .total-box {
+      padding: 15px 8px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      text-align: center;
+      background: #fff;
+    }
+
+    .total-box span { display: block; color: var(--muted); font-size: .75rem; }
+    .total-box strong { display: block; margin-top: 5px; color: var(--purple); font-size: 1.15rem; }
+
+    .action-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .secondary {
+      min-height: 45px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      color: var(--purple);
+      background: #fff;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .secondary:hover { border-color: var(--purple); }
+
+    .note {
+      position: relative;
+      z-index: 1;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: .78rem;
+      line-height: 1.8;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 26px;
+      z-index: 10;
+      transform: translate(-50%, 20px);
+      padding: 12px 18px;
+      border-radius: 12px;
+      color: #fff;
+      background: #211a22;
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s ease;
+      box-shadow: 0 12px 30px rgba(0,0,0,.2);
+    }
+
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    @media (max-width: 850px) {
+      .layout { grid-template-columns: 1fr; }
+      .summary { position: static; }
+    }
+
+    @media (max-width: 650px) {
+      .page { width: min(100% - 14px, 1120px); padding-top: 8px; }
+      .hero { grid-template-columns: 1fr; padding: 25px 21px; border-radius: 22px; }
+      .logo-card { display: none; }
+      .builder, .summary { padding: 17px; }
+      .panel { border-radius: 20px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .preview { grid-template-columns: repeat(2, 1fr); }
+      .action-row { grid-template-columns: 1fr; }
+      .hero::before { left: -10%; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { width: 100%; padding: 0; }
+      .hero { min-height: auto; box-shadow: none; border-radius: 0; }
+      .layout { grid-template-columns: 1fr; }
+      .builder > .form-grid,
+      .builder > .quick-grams,
+      .builder > .preview,
+      .builder > .primary,
+      .items-head .text-button,
+      .remove,
+      .action-row { display: none !important; }
+      .panel { box-shadow: none; }
+      .summary { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div class="brand">
+        <div class="eyebrow">وازن حياتك</div>
+        <h1>حاسبة السعرات والماكروز</h1>
+        <p class="subtitle">اختر الصنف، أدخل الكمية بالجرام، وأضف جميع مكونات وجبتك لمعرفة مجموع السعرات والبروتين والكارب والدهون.</p>
+      </div>
+      <div class="logo-card" aria-label="Healthy Yard"><strong>hy</strong></div>
+    </header>
+
+    <section class="layout">
+      <div class="panel builder">
+        <h2 class="section-title">أضف صنفًا إلى الوجبة</h2>
+
+        <div class="form-grid">
+          <div>
+            <label for="category">القسم</label>
+            <select id="category"></select>
+          </div>
+          <div>
+            <label for="food">الصنف</label>
+            <select id="food"></select>
+          </div>
+          <div>
+            <label for="grams">الكمية (جرام)</label>
+            <input id="grams" type="number" inputmode="decimal" min="1" max="3000" step="1" value="100" />
+          </div>
+        </div>
+
+        <div class="quick-grams" aria-label="كميات سريعة">
+          <button class="chip" type="button" data-grams="50">50 جم</button>
+          <button class="chip active" type="button" data-grams="100">100 جم</button>
+          <button class="chip" type="button" data-grams="150">150 جم</button>
+          <button class="chip" type="button" data-grams="200">200 جم</button>
+        </div>
+
+        <div class="preview" aria-live="polite">
+          <div class="metric"><span>السعرات</span><strong id="previewCal">0</strong></div>
+          <div class="metric"><span>البروتين</span><strong id="previewProtein">0 جم</strong></div>
+          <div class="metric"><span>الكارب</span><strong id="previewCarbs">0 جم</strong></div>
+          <div class="metric"><span>الدهون</span><strong id="previewFat">0 جم</strong></div>
+        </div>
+
+        <button class="primary" id="addItem" type="button">+ إضافة الصنف</button>
+
+        <div class="items-wrap">
+          <div class="items-head">
+            <h2>مكونات الوجبة</h2>
+            <button class="text-button" id="clearAll" type="button">مسح الكل</button>
+          </div>
+          <div id="emptyState" class="empty">لم تُضف أي أصناف بعد.<br>اختر صنفًا وحدد الجرامات ثم اضغط «إضافة الصنف».</div>
+          <div id="orderList" class="order-list"></div>
+        </div>
+      </div>
+
+      <aside class="panel summary">
+        <h2 class="section-title">إجمالي الوجبة</h2>
+        <div class="total-cal">
+          <span>إجمالي السعرات الحرارية</span>
+          <strong id="totalCal">0</strong>
+          <small>سعرة حرارية</small>
+        </div>
+        <div class="totals-grid">
+          <div class="total-box"><span>بروتين</span><strong id="totalProtein">0 جم</strong></div>
+          <div class="total-box"><span>كارب</span><strong id="totalCarbs">0 جم</strong></div>
+          <div class="total-box"><span>دهون</span><strong id="totalFat">0 جم</strong></div>
+        </div>
+        <div class="action-row">
+          <button class="secondary" id="copySummary" type="button">نسخ النتيجة</button>
+          <button class="secondary" id="printSummary" type="button">طباعة</button>
+        </div>
+        <p class="note">القيم الغذائية في قاعدة البيانات محسوبة لكل 100 جرام، ثم تُضرب تلقائيًا حسب الكمية المدخلة. النتائج تقديرية وقد تختلف قليلًا باختلاف التحضير الفعلي.</p>
+      </aside>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const foods = [
+      // أطباق الدجاج
+      { category: "chicken", name: "ستيك دجاج", cal: 164, protein: 30, carbs: 0, fat: 4.6 },
+      { category: "chicken", name: "دجاج بكريمة الفطر", cal: 162, protein: 26, carbs: 2.2, fat: 5.5 },
+      { category: "chicken", name: "دجاج بكريمة الزعفران", cal: 159, protein: 26, carbs: 2, fat: 5.2 },
+      { category: "chicken", name: "دجاج بكريمة السبانخ", cal: 159, protein: 26, carbs: 1.5, fat: 5.3 },
+      { category: "chicken", name: "دجاج بصلصة الليمون", cal: 175, protein: 27, carbs: 1.6, fat: 6.2 },
+      { category: "chicken", name: "دجاج بالزبدة", cal: 184, protein: 27, carbs: 1, fat: 8 },
+      { category: "chicken", name: "دجاج صيني", cal: 141, protein: 24, carbs: 1, fat: 4.5 },
+      { category: "chicken", name: "دجاج باربيكيو", cal: 158, protein: 25, carbs: 2, fat: 5.5 },
+      { category: "chicken", name: "دجاج بيستو", cal: 167, protein: 26, carbs: 1.8, fat: 6.2 },
+      { category: "chicken", name: "دجاج كرسبي", cal: 211, protein: 26, carbs: 12, fat: 6.5 },
+      { category: "chicken", name: "دجاج بالملوخية", cal: 148, protein: 24, carbs: 2, fat: 4.6 },
+      { category: "chicken", name: "دجاج باميا", cal: 144, protein: 24, carbs: 1, fat: 4.8 },
+      { category: "chicken", name: "دجاج بالزهرة", cal: 169, protein: 26, carbs: 2.4, fat: 6.2 },
+      { category: "chicken", name: "كرات الدجاج", cal: 180, protein: 25, carbs: 8, fat: 5.3 },
+      { category: "chicken", name: "كفتة الدجاج", cal: 188, protein: 27, carbs: 8, fat: 5.3 },
+      { category: "chicken", name: "كباب الدجاج", cal: 180, protein: 26, carbs: 7, fat: 5.3 },
+      { category: "chicken", name: "مسالا دجاج", cal: 161, protein: 25, carbs: 1.6, fat: 6 },
+      { category: "chicken", name: "مسخن دجاج", cal: 160, protein: 26, carbs: 1, fat: 5.8 },
+      { category: "chicken", name: "فاهيتا الدجاج", cal: 138, protein: 26, carbs: 0.5, fat: 4 },
+      { category: "chicken", name: "صامولي فاهيتا دجاج", cal: 364, protein: 33.3, carbs: 32.5, fat: 11.2 },
+      { category: "chicken", name: "تورتيللا فاهيتا دجاج", cal: 391, protein: 34.7, carbs: 36.5, fat: 11.8 },
+      { category: "chicken", name: "فتة الدجاج", cal: 394, protein: 36.5, carbs: 26, fat: 16 },
+
+      // أطباق اللحم
+      { category: "meat", name: "كباب لحم", cal: 147, protein: 22, carbs: 3.8, fat: 5 },
+      { category: "meat", name: "كباب لبن", cal: 153, protein: 23, carbs: 4.2, fat: 5 },
+      { category: "meat", name: "كرات لحم", cal: 148, protein: 22, carbs: 3.8, fat: 5 },
+      { category: "meat", name: "لحم فاهيتا", cal: 118, protein: 19, carbs: 0.5, fat: 4 },
+      { category: "meat", name: "لحم باربيكيو", cal: 120, protein: 19, carbs: 2, fat: 4 },
+      { category: "meat", name: "لحم صيني", cal: 116, protein: 19, carbs: 1, fat: 4 },
+      { category: "meat", name: "مسالا لحم", cal: 140, protein: 20, carbs: 1.6, fat: 6 },
+      { category: "meat", name: "لحم مفروم", cal: 127, protein: 21, carbs: 0.5, fat: 4.5 },
+      { category: "meat", name: "لحم باميا", cal: 120, protein: 20, carbs: 1, fat: 4 },
+      { category: "meat", name: "لحم بكريمة الفطر", cal: 142, protein: 20, carbs: 2, fat: 6 },
+      { category: "meat", name: "ستيك لحم تندرلوين", cal: 141, protein: 24, carbs: 0, fat: 5 },
+      { category: "meat", name: "برجر لحم بخبز البطاطا", cal: 354, protein: 30, carbs: 31.5, fat: 12 },
+      { category: "meat", name: "تورتيللا فاهيتا لحم", cal: 366, protein: 27.7, carbs: 36.5, fat: 12.2 },
+      { category: "meat", name: "صامولي فاهيتا لحم", cal: 340, protein: 25.3, carbs: 32.5, fat: 12 },
+
+      // البحريات
+      { category: "seafood", name: "سمك سلمون", cal: 217, protein: 25, carbs: 0, fat: 13 },
+      { category: "seafood", name: "روبيان فاهيتا", cal: 97, protein: 21, carbs: 1, fat: 1 },
+      { category: "seafood", name: "روبيان بكريمة الفطر", cal: 123, protein: 22, carbs: 2, fat: 3 },
+      { category: "seafood", name: "روبيان بصلصة الريحان", cal: 106, protein: 21, carbs: 1, fat: 2 },
+      { category: "seafood", name: "روبيان بكريمة الزعفران", cal: 121, protein: 22, carbs: 1.5, fat: 3 },
+      { category: "seafood", name: "روبيان مسالا", cal: 128, protein: 22, carbs: 1, fat: 4 },
+      { category: "seafood", name: "روبيان زبدة", cal: 146, protein: 23, carbs: 1, fat: 5.5 },
+      { category: "seafood", name: "روبيان بصلصة الليمون", cal: 114, protein: 20, carbs: 1, fat: 3.4 },
+      { category: "seafood", name: "روبيان صيني", cal: 101, protein: 21, carbs: 2, fat: 1 },
+
+      // الكارب
+      { category: "carb", name: "رز أبيض", cal: 130, protein: 2.4, carbs: 28.8, fat: 0.2 },
+      { category: "carb", name: "رز زعفران", cal: 130, protein: 2.4, carbs: 28.8, fat: 0.2 },
+      { category: "carb", name: "رز بخاري", cal: 138, protein: 3, carbs: 29, fat: 1 },
+      { category: "carb", name: "رز كبسة", cal: 138, protein: 3, carbs: 29, fat: 1 },
+      { category: "carb", name: "رز مندي", cal: 136, protein: 2.5, carbs: 29, fat: 1 },
+      { category: "carb", name: "كشري", cal: 145, protein: 4.6, carbs: 27, fat: 2 },
+      { category: "carb", name: "باستا بصلصة حمراء", cal: 138, protein: 5, carbs: 26.5, fat: 1.5 },
+      { category: "carb", name: "باستا بصلصة بيضاء", cal: 154, protein: 6, carbs: 27, fat: 2.5 },
+      { category: "carb", name: "باستا بيستو", cal: 153, protein: 6, carbs: 27, fat: 2.4 },
+      { category: "carb", name: "بطاطا مهروسة", cal: 114, protein: 3.8, carbs: 19, fat: 2.5 },
+      { category: "carb", name: "بطاطا مشوية", cal: 94, protein: 2.9, carbs: 17.2, fat: 1.5 },
+      { category: "carb", name: "بطاطا حلوة", cal: 99, protein: 2.9, carbs: 18.5, fat: 1.5 },
+      { category: "carb", name: "بطاطا إيطالية", cal: 117, protein: 3, carbs: 17.2, fat: 4 },
+      { category: "carb", name: "بطاطس ودجز", cal: 154, protein: 2.9, carbs: 17.2, fat: 8 }
+    ];
+
+    const categories = [
+      { id: "chicken", label: "أطباق الدجاج" },
+      { id: "meat", label: "أطباق اللحم" },
+      { id: "seafood", label: "البحريات" },
+      { id: "carb", label: "الكارب" }
+    ];
+
+    const categoryEl = document.getElementById("category");
+    const foodEl = document.getElementById("food");
+    const gramsEl = document.getElementById("grams");
+    const orderListEl = document.getElementById("orderList");
+    const emptyStateEl = document.getElementById("emptyState");
+    const toastEl = document.getElementById("toast");
+
+    let order = [];
+
+    function formatNumber(value) {
+      return Number(value).toLocaleString("ar-SA", { maximumFractionDigits: 1 });
+    }
+
+    function categoryLabel(id) {
+      return categories.find(c => c.id === id)?.label || id;
+    }
+
+    function populateCategories() {
+      categoryEl.innerHTML = categories.map(c => `<option value="${c.id}">${c.label}</option>`).join("");
+    }
+
+    function populateFoods() {
+      const filtered = foods.filter(item => item.category === categoryEl.value);
+      foodEl.innerHTML = filtered.map(item => `<option value="${foods.indexOf(item)}">${item.name}</option>`).join("");
+      updatePreview();
+    }
+
+    function selectedFood() {
+      return foods[Number(foodEl.value)] || foods[0];
+    }
+
+    function currentValues() {
+      const item = selectedFood();
+      const grams = Math.max(0, Number(gramsEl.value) || 0);
+      const factor = grams / 100;
+      return {
+        item,
+        grams,
+        cal: item.cal * factor,
+        protein: item.protein * factor,
+        carbs: item.carbs * factor,
+        fat: item.fat * factor
+      };
+    }
+
+    function updatePreview() {
+      const values = currentValues();
+      document.getElementById("previewCal").textContent = formatNumber(values.cal);
+      document.getElementById("previewProtein").textContent = `${formatNumber(values.protein)} جم`;
+      document.getElementById("previewCarbs").textContent = `${formatNumber(values.carbs)} جم`;
+      document.getElementById("previewFat").textContent = `${formatNumber(values.fat)} جم`;
+
+      document.querySelectorAll(".chip").forEach(chip => {
+        chip.classList.toggle("active", Number(chip.dataset.grams) === Number(gramsEl.value));
+      });
+    }
+
+    function addItem() {
+      const values = currentValues();
+      if (!values.grams || values.grams <= 0) {
+        showToast("أدخل كمية صحيحة بالجرام");
+        gramsEl.focus();
+        return;
+      }
+
+      order.push({
+        id: Date.now() + Math.random(),
+        ...values
+      });
+      renderOrder();
+      showToast("تمت إضافة الصنف");
+    }
+
+    function removeItem(id) {
+      order = order.filter(item => item.id !== id);
+      renderOrder();
+    }
+
+    function clearAll() {
+      if (!order.length) return;
+      order = [];
+      renderOrder();
+      showToast("تم مسح جميع الأصناف");
+    }
+
+    function renderOrder() {
+      emptyStateEl.style.display = order.length ? "none" : "block";
+      orderListEl.innerHTML = order.map(entry => `
+        <article class="order-item">
+          <div>
+            <h3>${entry.item.name}</h3>
+            <div class="order-meta">
+              ${categoryLabel(entry.item.category)} · ${formatNumber(entry.grams)} جم<br>
+              ${formatNumber(entry.cal)} سعرة · بروتين ${formatNumber(entry.protein)} جم · كارب ${formatNumber(entry.carbs)} جم · دهون ${formatNumber(entry.fat)} جم
+            </div>
+          </div>
+          <button class="remove" type="button" aria-label="حذف ${entry.item.name}" onclick="removeItem(${entry.id})">×</button>
+        </article>
+      `).join("");
+
+      const totals = order.reduce((sum, entry) => {
+        sum.cal += entry.cal;
+        sum.protein += entry.protein;
+        sum.carbs += entry.carbs;
+        sum.fat += entry.fat;
+        return sum;
+      }, { cal: 0, protein: 0, carbs: 0, fat: 0 });
+
+      document.getElementById("totalCal").textContent = formatNumber(totals.cal);
+      document.getElementById("totalProtein").textContent = `${formatNumber(totals.protein)} جم`;
+      document.getElementById("totalCarbs").textContent = `${formatNumber(totals.carbs)} جم`;
+      document.getElementById("totalFat").textContent = `${formatNumber(totals.fat)} جم`;
+    }
+
+    function buildSummaryText() {
+      if (!order.length) return "لم تتم إضافة أصناف بعد.";
+      const totals = order.reduce((sum, entry) => {
+        sum.cal += entry.cal;
+        sum.protein += entry.protein;
+        sum.carbs += entry.carbs;
+        sum.fat += entry.fat;
+        return sum;
+      }, { cal: 0, protein: 0, carbs: 0, fat: 0 });
+
+      const lines = order.map((entry, index) =>
+        `${index + 1}. ${entry.item.name} — ${formatNumber(entry.grams)} جم — ${formatNumber(entry.cal)} سعرة`
+      );
+
+      return [
+        "ملخص وجبة هلثي يارد",
+        ...lines,
+        "",
+        `الإجمالي: ${formatNumber(totals.cal)} سعرة حرارية`,
+        `البروتين: ${formatNumber(totals.protein)} جم`,
+        `الكارب: ${formatNumber(totals.carbs)} جم`,
+        `الدهون: ${formatNumber(totals.fat)} جم`
+      ].join("\n");
+    }
+
+    async function copySummary() {
+      const text = buildSummaryText();
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("تم نسخ النتيجة");
+      } catch {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        textarea.remove();
+        showToast("تم نسخ النتيجة");
+      }
+    }
+
+    let toastTimer;
+    function showToast(message) {
+      clearTimeout(toastTimer);
+      toastEl.textContent = message;
+      toastEl.classList.add("show");
+      toastTimer = setTimeout(() => toastEl.classList.remove("show"), 1800);
+    }
+
+    categoryEl.addEventListener("change", populateFoods);
+    foodEl.addEventListener("change", updatePreview);
+    gramsEl.addEventListener("input", updatePreview);
+    gramsEl.addEventListener("keydown", event => {
+      if (event.key === "Enter") addItem();
+    });
+    document.getElementById("addItem").addEventListener("click", addItem);
+    document.getElementById("clearAll").addEventListener("click", clearAll);
+    document.getElementById("copySummary").addEventListener("click", copySummary);
+    document.getElementById("printSummary").addEventListener("click", () => window.print());
+
+    document.querySelectorAll(".chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        gramsEl.value = chip.dataset.grams;
+        updatePreview();
+      });
+    });
+
+    populateCategories();
+    populateFoods();
+    renderOrder();
+  </script>
+</body>
+</html>
